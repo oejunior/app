@@ -28,12 +28,13 @@ import {
 
 // Cole aqui (Firebase Console -> Project settings -> Web app -> firebaseConfig)
 export const firebaseConfig = {
-  apiKey: "COLE_AQUI",
-  authDomain: "COLE_AQUI",
-  projectId: "COLE_AQUI",
-  storageBucket: "COLE_AQUI",
-  messagingSenderId: "COLE_AQUI",
-  appId: "COLE_AQUI"
+ apiKey: "AIzaSyCY9SuOi5l-m0IQo4sXqh76P3FWqRdRbVw",
+    authDomain: "docceapp.firebaseapp.com",
+    projectId: "docceapp",
+    storageBucket: "docceapp.firebasestorage.app",
+    messagingSenderId: "298918875800",
+    appId: "1:298918875800:web:fe022c386ff49eada276ed",
+    measurementId: "G-4ZVMQJ74B3"
 };
 
 export const app = initializeApp(firebaseConfig);
