@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Docce | Encomendas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">D</div>
+        <div class="brand-text">
+          <div class="brand-title">Docce Encomendas</div>
+          <div class="brand-subtitle">Agenda estilo “reservas”</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="hello" id="helloUser">Olá, —</div>
+        <button class="btn btn-ghost" id="btnLogout" type="button" hidden>Sair</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="sidebar" id="sidebar" hidden>
+        <nav class="nav">
+          <button class="nav-item" data-route="dashboard">Dashboard</button>
+          <button class="nav-item" data-route="calendar">Calendário</button>
+          <button class="nav-item" data-route="orders">Encomendas</button>
+          <button class="nav-item" data-route="clients">Clientes</button>
+          <button class="nav-item nav-primary" data-route="order-new">+ Nova encomenda</button>
+        </nav>
+
+        <div class="sidebar-foot">
+          <div class="pill" id="pillStatus">online</div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <!-- Toast -->
+        <div class="toast" id="toast" hidden>
+          <div class="toast-msg" id="toastMsg">...</div>
+          <button class="toast-close" id="toastClose" type="button">×</button>
+        </div>
+
+        <!-- LOGIN -->
+        <section class="view" id="view-login">
+          <div class="card auth-card">
+            <h1>Entrar</h1>
+            <p class="muted">Usuários são cadastrados no Firebase (Authentication).</p>
+
+            <form id="loginForm" class="form">
+              <label class="field">
+                <span>E-mail</span>
+                <input type="email" id="loginEmail" autocomplete="email" required />
+              </label>
+
+              <label class="field">
+                <span>Senha</span>
+                <input type="password" id="loginPassword" autocomplete="current-password" required />
+              </label>
+
+              <button class="btn btn-primary" type="submit">Entrar</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- DASHBOARD -->
+        <section class="view" id="view-dashboard" hidden>
+          <div class="view-head">
+            <h2>Dashboard</h2>
+            <div class="view-actions">
+              <select id="dashFilter" class="select">
+                <option value="next7">Próximos 7 dias</option>
+                <option value="today">Hoje</option>
+                <option value="month">Este mês</option>
+              </select>
+
+              <input id="quickSearch" class="input" placeholder="Busca rápida por nome/telefone..." />
+              <button class="btn btn-primary" id="btnRefreshDash" type="button">Atualizar</button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <h3>Próximas encomendas</h3>
+                <div class="muted">Até 7 dias (inclui hoje)</div>
+              </div>
+              <div id="listUpcoming" class="list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3>Encomendas de hoje</h3>
+                <div class="muted">Ações rápidas</div>
+              </div>
+              <div id="listToday" class="list list-today"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CALENDÁRIO -->
+        <section class="view" id="view-calendar" hidden>
+          <div class="view-head">
+            <h2>Calendário</h2>
+            <div class="view-actions">
+              <button class="btn btn-ghost" id="calPrev" type="button">◀</button>
+              <div class="pill" id="calTitle">—</div>
+              <button class="btn btn-ghost" id="calNext" type="button">▶</button>
+              <button class="btn btn-primary" id="calToday" type="button">Hoje</button>
+            </div>
+          </div>
+
+          <div class="calendar">
+            <div class="calendar-weekdays">
+              <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <div class="card-head">
+              <h3 id="dayOrdersTitle">Encomendas do dia</h3>
+              <div class="muted" id="dayOrdersSubtitle">Selecione um dia no calendário.</div>
+            </div>
+            <div id="listDayOrders" class="list"></div>
+          </div>
+        </section>
+
+        <!-- ENCOMENDAS -->
+        <section class="view" id="view-orders" hidden>
+          <div class="view-head">
+            <h2>Encomendas</h2>
+            <div class="view-actions">
+              <select id="ordersFilter" class="select">
+                <option value="today">Hoje</option>
+                <option value="next7" selected>Próximos 7 dias</option>
+                <option value="month">Este mês</option>
+              </select>
+              <input id="ordersSearch" class="input" placeholder="Buscar por nome/telefone..." />
+              <button class="btn btn-primary" id="btnLoadOrders" type="button">Carregar</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div id="ordersList" class="list"></div>
+          </div>
+        </section>
+
+        <!-- NOVA / EDITAR ENCOMENDA -->
+        <section class="view" id="view-order-form" hidden>
+          <div class="view-head">
+            <h2 id="orderFormTitle">Nova encomenda</h2>
+            <div class="view-actions">
+              <button class="btn btn-ghost" id="btnBackFromForm" type="button">Voltar</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <form id="orderForm" class="form">
+              <input type="hidden" id="orderId" />
+
+              <div class="grid-2">
+                <label class="field">
+                  <span>Data e hora</span>
+                  <input type="datetime-local" id="orderDateTime" required />
+                  <small class="hint">Horário local do Brasil (do dispositivo).</small>
+                </label>
+
+                <label class="field">
+                  <span>Tipo</span>
+                  <select id="orderType" class="select" required>
+                    <option value="Retirada">Retirada</option>
+                    <option value="Entrega">Entrega</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span>Cliente</span>
+                  <select id="orderClient" class="select" required></select>
+                  <small class="hint">Você pode cadastrar cliente rápido abaixo.</small>
+                </label>
+
+                <label class="field">
+                  <span>WhatsApp (telefone)</span>
+                  <input type="tel" id="orderPhone" placeholder="(xx) xxxxx-xxxx" required />
+                  <small class="hint">Este telefone entra na confirmação e no PDF.</small>
+                </label>
+              </div>
+
+              <details class="subcard" id="quickClientBox">
+                <summary>Cadastrar cliente rápido</summary>
+                <div class="grid-2" style="margin-top:10px;">
+                  <label class="field">
+                    <span>Nome</span>
+                    <input type="text" id="qcName" />
+                  </label>
+                  <label class="field">
+                    <span>Telefone</span>
+                    <input type="tel" id="qcPhone" />
+                  </label>
+                </div>
+                <label class="field">
+                  <span>Observações</span>
+                  <textarea id="qcObs" rows="2"></textarea>
+                </label>
+                <button class="btn btn-secondary" id="btnCreateQuickClient" type="button">Criar cliente</button>
+              </details>
+
+              <label class="field">
+                <span>Observações</span>
+                <textarea id="orderNotes" rows="3" placeholder="Ex.: escrever ‘Feliz Natal’, sem amendoim..."></textarea>
+              </label>
+
+              <div class="subcard">
+                <div class="subcard-head">
+                  <strong>Itens</strong>
+                  <button class="btn btn-ghost" id="btnAddItem" type="button">+ Adicionar item</button>
+                </div>
+                <div id="itemsContainer" class="items"></div>
+                <small class="hint">Itens simples: nome + quantidade.</small>
+              </div>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span>Valor total (R$)</span>
+                  <input type="text" id="orderTotal" placeholder="Ex.: 129,90" required />
+                  <small class="hint">Aceita vírgula ou ponto.</small>
+                </label>
+
+                <label class="field">
+                  <span>Status</span>
+                  <select id="orderStatus" class="select" required>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Confirmado">Confirmado</option>
+                    <option value="Em produção">Em produção</option>
+                    <option value="Pronto">Pronto</option>
+                    <option value="Entregue/Retirado">Entregue/Retirado</option>
+                    <option value="Cancelado">Cancelado</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span>Forma de pagamento (opcional)</span>
+                  <input type="text" id="orderPayment" placeholder="Ex.: Pix, cartão, dinheiro" />
+                </label>
+
+                <label class="field">
+                  <span>Sinal/entrada (opcional)</span>
+                  <input type="text" id="orderDeposit" placeholder="Ex.: 50,00" />
+                </label>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="btnSaveOrder">Salvar</button>
+                <button class="btn btn-danger" type="button" id="btnDeleteOrder" hidden>Excluir</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- CLIENTES -->
+        <section class="view" id="view-clients" hidden>
+          <div class="view-head">
+            <h2>Clientes</h2>
+            <div class="view-actions">
+              <input id="clientSearch" class="input" placeholder="Buscar por nome/telefone..." />
+              <button class="btn btn-primary" id="btnReloadClients" type="button">Atualizar</button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <h3>Novo cliente</h3>
+                <div class="muted">Cadastro rápido</div>
+              </div>
+
+              <form id="clientForm" class="form">
+                <label class="field">
+                  <span>Nome</span>
+                  <input type="text" id="clientName" required />
+                </label>
+
+                <label class="field">
+                  <span>Telefone</span>
+                  <input type="tel" id="clientPhone" required />
+                </label>
+
+                <label class="field">
+                  <span>Observações</span>
+                  <textarea id="clientNotes" rows="3"></textarea>
+                </label>
+
+                <button class="btn btn-secondary" type="submit">Salvar cliente</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3>Lista de clientes</h3>
+                <div class="muted">Clique para usar na encomenda</div>
+              </div>
+              <div id="clientsList" class="list"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
