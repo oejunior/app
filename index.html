@@ -38,7 +38,7 @@
       backdrop-filter: blur(10px);
     }
     .title{display:flex; flex-direction:column; gap:2px;}
-    .title h1{font-size:18px; margin:0; letter-spacing:.2px;}
+    .title h1{font-size:18px; margin:0;}
     .title p{margin:0; font-size:13px; color:var(--muted);}
     .pill{
       font-size:12px; color:var(--muted);
@@ -46,7 +46,6 @@
       border:1px solid var(--line);
       border-radius:999px;
       background: rgba(15,17,23,.6);
-      white-space:nowrap;
     }
 
     .grid{
@@ -64,71 +63,47 @@
     }
     .section-head{
       padding:14px 16px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
+      display:flex; justify-content:space-between;
       background: linear-gradient(180deg, rgba(15,17,23,.6), rgba(15,17,23,.1));
       border-bottom:1px solid var(--line);
     }
     .section-head h2{
-      margin:0; font-size:14px; letter-spacing:.3px;
-      text-transform: uppercase;
-      color: #d7ddf3;
+      margin:0; font-size:14px; text-transform: uppercase;
     }
     .section-head span{font-size:12px; color:var(--muted);}
 
     .links{
       padding:12px;
       display:grid;
-      grid-template-columns: 1fr;
       gap:10px;
     }
     a.btn{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+      display:flex; justify-content:space-between; align-items:center;
       padding:12px 14px;
       border-radius: 14px;
       text-decoration:none;
       color:var(--txt);
       background: linear-gradient(180deg, rgba(27,34,64,.8), rgba(15,17,23,.8));
       border:1px solid rgba(122,162,255,.18);
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
     }
-    a.btn:hover{
-      transform: translateY(-1px);
-      border-color: var(--accent);
-      background: linear-gradient(180deg, rgba(26,42,108,.86), rgba(15,17,23,.86));
-    }
-    .left{
-      display:flex; flex-direction:column; gap:2px;
-      min-width:0;
-    }
-    .name{
-      font-size:14px; font-weight:650;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .desc{
-      font-size:12px; color:var(--muted);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
+    .left{display:flex; flex-direction:column;}
+    .name{font-size:14px; font-weight:650;}
+    .desc{font-size:12px; color:var(--muted);}
     .arrow{
-      flex:0 0 auto;
       width:32px; height:32px;
       border-radius:10px;
       display:grid; place-items:center;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.08);
-      color: rgba(255,255,255,.9);
-      font-size:16px;
     }
+
     footer{
       margin-top:14px;
-      padding:14px 16px;
-      color: var(--muted);
       font-size:12px;
+      color:var(--muted);
       text-align:center;
     }
+
     @media (min-width: 720px){
       .grid{grid-template-columns: 1fr 1fr;}
       .section.full{grid-column: 1 / -1;}
@@ -137,118 +112,113 @@
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="title">
-        <h1>Central de Links</h1>
-        <p>Atalhos rápidos para seus sistemas e manuais</p>
-      </div>
-      <div class="pill">Docce • Operação</div>
-    </header>
-
-    <div class="grid">
-
-      <section class="section">
-        <div class="section-head">
-          <h2>Financeiro</h2>
-          <span>Caixa</span>
-        </div>
-        <div class="links">
-          <a class="btn" href="https://app-8upz5t0yql8h.appmedo.com" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Fechamento de Caixa</div>
-              <div class="desc">Entradas/saídas e fechamento diário</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>Funcionários</h2>
-          <span>Gastos</span>
-        </div>
-        <div class="links">
-          <a class="btn" href="https://app.creao.ai/share?app=nupmM9a6&utm_source=share&utm_medium=link" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Gastos dos Funcionários</div>
-              <div class="desc">Lançamentos e controle interno</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>Delivery</h2>
-          <span>Operação</span>
-        </div>
-        <div class="links">
-          <a class="btn" href="https://oejunior.github.io/manual/delivery.html" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Controle Delivery</div>
-              <div class="desc">Acompanhamento e registro de entregas</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>Encomendas</h2>
-          <span>Gestão</span>
-        </div>
-        <div class="links">
-          <a class="btn" href="https://app-8ek5f8oaq3up.appmedo.com/" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Encomendas Docce</div>
-              <div class="desc">Cadastro e organização das encomendas</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-
-          <a class="btn" href="https://oejunior.github.io/manual/encomendas.html" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Roteiro de Encomendas</div>
-              <div class="desc">Passo a passo e padrões da operação</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-        </div>
-      </section>
-
-      <section class="section full">
-        <div class="section-head">
-          <h2>Manuais</h2>
-          <span>Rotina</span>
-        </div>
-        <div class="links">
-          <a class="btn" href="https://oejunior.github.io/manual/abertura.html" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Check List Abertura de Loja</div>
-              <div class="desc">Rotina de abertura e conferências</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-
-          <a class="btn" href="https://oejunior.github.io/manual/atendimento.html" target="_blank" rel="noopener">
-            <div class="left">
-              <div class="name">Roteiro de Atendimento</div>
-              <div class="desc">Padrão de atendimento e abordagem</div>
-            </div>
-            <div class="arrow">↗</div>
-          </a>
-        </div>
-      </section>
-
-    </div>
-
-    <footer>
-      Dica: aponte seu shortlink para esta página (GitHub Pages).
-    </footer>
+<div class="wrap">
+<header>
+  <div class="title">
+    <h1>Central de Links</h1>
+    <p>Atalhos rápidos para sistemas e manuais</p>
   </div>
+  <div class="pill">Docce • Operação</div>
+</header>
+
+<div class="grid">
+
+<section class="section">
+  <div class="section-head">
+    <h2>Financeiro</h2><span>Caixa</span>
+  </div>
+  <div class="links">
+    <a class="btn" href="https://app-8upz5t0yql8h.appmedo.com" target="_blank">
+      <div class="left">
+        <div class="name">Fechamento de Caixa</div>
+        <div class="desc">Entradas e fechamento diário</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Funcionários</h2><span>Gastos</span>
+  </div>
+  <div class="links">
+    <a class="btn" href="https://app.creao.ai/share?app=nupmM9a6&utm_source=share&utm_medium=link" target="_blank">
+      <div class="left">
+        <div class="name">Gastos dos Funcionários</div>
+        <div class="desc">Controle interno</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Delivery</h2><span>Operação</span>
+  </div>
+  <div class="links">
+    <a class="btn" href="https://oejunior.github.io/manual/delivery.html" target="_blank">
+      <div class="left">
+        <div class="name">Controle Delivery</div>
+        <div class="desc">Registro de entregas</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Encomendas</h2><span>Gestão</span>
+  </div>
+  <div class="links">
+    <a class="btn" href="https://app-8ek5f8oaq3up.appmedo.com/" target="_blank">
+      <div class="left">
+        <div class="name">Encomendas Docce</div>
+        <div class="desc">Cadastro e organização</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<section class="section full">
+  <div class="section-head">
+    <h2>Manuais</h2><span>Rotina</span>
+  </div>
+  <div class="links">
+    <a class="btn" href="https://oejunior.github.io/manual/abertura.html" target="_blank">
+      <div class="left">
+        <div class="name">Check List Abertura de Loja</div>
+        <div class="desc">Rotina de abertura</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+
+    <a class="btn" href="https://oejunior.github.io/manual/atendimento.html" target="_blank">
+      <div class="left">
+        <div class="name">Roteiro de Atendimento</div>
+        <div class="desc">Padrão de atendimento</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+
+    <a class="btn" href="https://oejunior.github.io/manual/encomendas.html" target="_blank">
+      <div class="left">
+        <div class="name">Roteiro de Encomendas</div>
+        <div class="desc">Procedimentos e conferências</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  Use um shortlink apontando para esta página
+</footer>
+</div>
 </body>
 </html>
